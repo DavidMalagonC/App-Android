@@ -20,6 +20,7 @@
         android:layout_height="wrap_content"
         android:hint="Nombres"
         android:inputType="text"
+        android:id="@+id/name" />
         />
 
     <EditText
@@ -27,6 +28,7 @@
         android:layout_height="wrap_content"
         android:hint="Apellidos"
         android:inputType="text"
+        android:id="@+id/lastname" />
         />
 
     <EditText
@@ -34,6 +36,7 @@
         android:layout_height="wrap_content"
         android:hint="Numero de documento"
         android:inputType="number"
+        android:id="@+id/document" />
         />
 
     <EditText
@@ -41,6 +44,7 @@
         android:layout_height="wrap_content"
         android:hint="Correo electronico"
         android:inputType="textEmailAddress"
+        android:id="@+id/email" />
         />
 
 
@@ -49,6 +53,7 @@
         android:layout_height="wrap_content"
         android:hint="Genero"
         android:inputType="text"
+        android:id="@+id/gender" />
         />
 
 
@@ -57,14 +62,17 @@
         android:layout_height="wrap_content"
         android:hint="Numero de telefono"
         android:inputType="number"
+        android:id="@+id/phone" />
         />
 
 
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Fecha de nacimiento"
-        android:inputType="textCapCharacters"
+        android:hint="Fecha de nacimiento(dd/mm/yy)"
+        android:inputType="text"
+        android:id="@+id/birthday"
+        />
         />
 
 
@@ -73,6 +81,7 @@
         android:layout_height="wrap_content"
         android:hint="Contraseña"
         android:inputType="textPassword"
+        android:id="@+id/password" />
         />
 
     <Button
@@ -80,6 +89,7 @@
         android:layout_height="wrap_content"
         android:text="REGISTRAR"
         android:layout_gravity="center"
+        android:id="@+id/buttonRegister" />
         />
 
 </LinearLayout>
