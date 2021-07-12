@@ -10,8 +10,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import java.text.SimpleDateFormat;
-
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     TextView tv_registrar;
     DatabaseHelper db;
@@ -36,7 +34,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         tv_registrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intentReg = new Intent(MainActivity.this,Registro.class);
+                Intent intentReg = new Intent(MainActivity.this, Register.class);
                 MainActivity.this.startActivity(intentReg);
                 
             }

@@ -45,6 +45,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
                 + "BIRTHDAY DATE,"
 
+                + "ROL INTEGER,"
+
                 + "DOCUMENT INTEGER);");
     }
 
@@ -53,8 +55,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         //db.execSQL("DROP TABLE IF EXISTS "+ TABLE_NAME);
     }
 
-    void insert(String name, String lastname, String email,
-                String gender, String phone, Date birthday, long document, String password) {
+    boolean insert(String name, String lastname, String email, String gender,
+                   String phone, Date birthday, long document, String password, int rol) {
+        Cursor c = getUser(email);
+        if(c.getCount() > 0){
+            return false;
+        }
         ContentValues drinkValues = new ContentValues();
         drinkValues.put("NAME", name);
         drinkValues.put("LASTNAME", lastname);
@@ -64,15 +70,17 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         drinkValues.put("BIRTHDAY", birthday.toString());
         drinkValues.put("DOCUMENT", document);
         drinkValues.put("PASSWORD", password);
+        drinkValues.put("ROL", rol);
 
 
         db.insert(TABLE_NAME, null, drinkValues);
+        return true;
 
     }
 
     public Boolean login(String email, String password) {
         Boolean login = false;
-        Cursor c = db.rawQuery("select id, EMAIL, PASSWORD from User where EMAIL = '" + email + "'", null);
+        Cursor c = getUser(email);
         if (c != null && c.getCount() > 0) {
             c.moveToFirst();
             do {
@@ -88,6 +96,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         //Cerramos el cursor
         c.close();
         return login;
+    }
+
+    public Cursor getUser(String email) {
+        return db.rawQuery("select * from User where EMAIL = '" + email + "'", null);
     }
 }
 
