@@ -19,6 +19,7 @@
         android:layout_height="wrap_content"
         android:hint="Usuario"
         android:inputType="text"
+        android:id="@+id/user"
 
         />
     <EditText
@@ -26,6 +27,7 @@
         android:layout_height="wrap_content"
         android:hint="Password"
         android:inputType="textPassword"
+        android:id="@+id/password"
         />
 
     <Button
@@ -33,6 +35,7 @@
         android:layout_height="wrap_content"
         android:text="Ingresar"
         android:layout_gravity="center"
+        android:id="@+id/buttonLogin"
         />
 
     <TextView
