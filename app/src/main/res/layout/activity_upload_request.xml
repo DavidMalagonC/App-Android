@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".Businessman">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="Solicitud de carga"
+        android:textSize="25sp"
+
+        />
+
+    <EditText
+        android:id="@+id/origin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Origen"
+        android:inputType="text" />
+
+    <EditText
+        android:id="@+id/destiny"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Destino"
+        android:inputType="text" />
+
+    <EditText
+        android:id="@+id/product"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Tipo de producto"
+        android:inputType="text" />
+
+    <EditText
+        android:id="@+id/description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Descripcion"
+        android:inputType="textEmailAddress" />
+
+
+    <EditText
+        android:id="@+id/weigth"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Peso (KG)"
+        android:inputType="number" />
+
+    <EditText
+        android:id="@+id/conditions"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Condiciones"
+        android:inputType="text" />
+
+    <Button
+        android:id="@+id/buttonRequest"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="Solicitar" />
+
+</LinearLayout>

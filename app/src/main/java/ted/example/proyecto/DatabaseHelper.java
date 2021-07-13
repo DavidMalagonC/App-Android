@@ -17,7 +17,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     private static final String DB_NAME = "Transport";
     private static final int DB_VERSION = 1;
-    private static final String TABLE_NAME = "User";
+    private static final String TABLE_NAME = "user";
+    private static final String TABLE_NAME_REQUEST = "request_load";
     private SQLiteDatabase db;
 
     public DatabaseHelper(@Nullable Context context, @Nullable String name, int version, @NonNull SQLiteDatabase.OpenParams openParams) {
@@ -48,6 +49,24 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 + "ROL INTEGER,"
 
                 + "DOCUMENT INTEGER);");
+
+        db.execSQL("CREATE TABLE " + TABLE_NAME_REQUEST + "("
+
+                + "id INTEGER PRIMARY KEY AUTOINCREMENT, "
+
+                + "origin TEXT, "
+
+                + "destiny TEXT,"
+
+                + "product TEXT,"
+
+                + "description TEXT,"
+
+                + "weigth INT,"
+
+                + "conditions TEXT,"
+
+                + "id_user INT)");
     }
 
     @Override
@@ -78,6 +97,23 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     }
 
+    boolean insertRequest(String origin, String destiny, String product, String description,
+                   String weigth, String conditions, int id_user) {
+ 
+        ContentValues content = new ContentValues();
+        content.put("origin", origin);
+        content.put("destiny", destiny);
+        content.put("product", product);
+        content.put("description", description);
+        content.put("weigth", weigth);
+        content.put("conditions", conditions);
+        content.put("id_user", id_user);
+
+        db.insert(TABLE_NAME_REQUEST, null, content);
+        return true;
+
+    }
+
     public Boolean login(String email, String password) {
         Boolean login = false;
         Cursor c = getUser(email);
@@ -85,11 +121,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             c.moveToFirst();
             do {
                 //Asignamos el valor en nuestras variables para crear un nuevo objeto Comentario
-                String user = c.getString(c.getColumnIndex("EMAIL"));
+                int rol = c.getInt(c.getColumnIndex("ROL"));
                 String passwordDB = c.getString(c.getColumnIndex("PASSWORD"));
                 int id = c.getInt(c.getColumnIndex("id"));
-                if (password.equals(passwordDB))
+                if (password.equals(passwordDB)) {
                     login = true;
+                    //((User) getApplication()).setId(id);
+                    //((User) getApplication()).setRol(rol);
+                }
             } while (c.moveToNext());
         }
 

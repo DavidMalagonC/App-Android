@@ -51,17 +51,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     //builder.setTitle("Titulo");
                     String message;
                     if(login){
-                        message = "¡Ingreso exitoso!";
+                        Intent intentReg = new Intent(MainActivity.this, Businessman.class);
+                        MainActivity.this.startActivity(intentReg);
                     }
                     else{
                         message = " ¡El correo o contraseña son incorrectos!";
+                        builder.setMessage(message);
+
+                        builder.setPositiveButton("Aceptar", null);
+                        AlertDialog dialog = builder.create();
+                        dialog.show();
                     }
-                    builder.setMessage(message);
 
-                    builder.setPositiveButton("Aceptar", null);
 
-                    AlertDialog dialog = builder.create();
-                    dialog.show();
 
             }
         } catch (Exception e){
