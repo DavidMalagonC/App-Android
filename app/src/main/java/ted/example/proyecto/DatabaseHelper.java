@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
@@ -114,31 +115,48 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     }
 
-    public Boolean login(String email, String password) {
+    public User login(String email, String password) {
         Boolean login = false;
         Cursor c = getUser(email);
         if (c != null && c.getCount() > 0) {
             c.moveToFirst();
-            do {
-                //Asignamos el valor en nuestras variables para crear un nuevo objeto Comentario
+
                 int rol = c.getInt(c.getColumnIndex("ROL"));
                 String passwordDB = c.getString(c.getColumnIndex("PASSWORD"));
                 int id = c.getInt(c.getColumnIndex("id"));
                 if (password.equals(passwordDB)) {
-                    login = true;
-                    //((User) getApplication()).setId(id);
-                    //((User) getApplication()).setRol(rol);
+                    c.close();
+                    return new User(id, rol);
                 }
-            } while (c.moveToNext());
         }
 
         //Cerramos el cursor
         c.close();
-        return login;
+        return null;
     }
 
     public Cursor getUser(String email) {
-        return db.rawQuery("select * from User where EMAIL = '" + email + "'", null);
+        return db.rawQuery("select * from user where EMAIL = '" + email + "'", null);
+    }
+
+    public ArrayList getRequestLoad() {
+        ArrayList<String> requests = new ArrayList<String>();
+        Cursor c = db.rawQuery("select * from request_load", null);
+        if (c != null && c.getCount() > 0) {
+            c.moveToFirst();
+            for (int i = 1; i < c.getCount(); i++) {
+                requests.add(c.getString(c.getColumnIndex("origin")));
+                requests.add(c.getString(c.getColumnIndex("destiny")));
+                requests.add(c.getString(c.getColumnIndex("product")));
+                requests.add(c.getString(c.getColumnIndex("description")));
+                requests.add(c.getInt(c.getColumnIndex("weigth"))+"");
+                requests.add(c.getString(c.getColumnIndex("conditions")));
+                c.moveToNext();
+            }
+        }
+        c.close();
+        return requests;
+
     }
 }
 

@@ -2,10 +2,20 @@ package ted.example.proyecto;
 
 import android.app.Application;
 
-public class User extends Application {
+import java.io.Serializable;
+
+public class User extends Application implements Serializable {
 
     private int rol;
     private int id;
+
+    public User(int id, int rol) {
+        this.id = id;
+        this.rol = rol;
+    }
+    public User(){
+
+    }
 
     public int getId() {
         return id;

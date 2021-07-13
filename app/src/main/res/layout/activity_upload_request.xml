@@ -11,7 +11,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:text="Solicitud de carga"
+        android:text="Solicitar transporte de carga"
         android:textSize="25sp"
 
         />

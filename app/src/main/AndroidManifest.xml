@@ -12,6 +12,7 @@
         android:theme="@style/Theme.Proyecto">
         <activity android:name=".Register"></activity>
         <activity android:name=".Businessman"></activity>
+        <activity android:name=".Owner"></activity>
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

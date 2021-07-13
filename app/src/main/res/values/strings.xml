@@ -5,4 +5,12 @@
         <item>Conductor</item>
         <item>Propietario</item>
     </string-array>
+    <string-array name="cabecera_tabla">
+        <item>Origen</item>
+        <item>Destino</item>
+        <item>T. producto</item>
+        <item>Descripción</item>
+        <item>Peso(KG)</item>
+        <item>Condiciones</item>
+    </string-array>
 </resources>
