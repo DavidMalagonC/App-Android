@@ -62,7 +62,7 @@ public class Owner extends AppCompatActivity implements View.OnClickListener {
         }
     }
 
-    private void alert(String message) {
+    public void alert(String message) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         //builder.setTitle("Titulo");
         builder.setMessage(message);

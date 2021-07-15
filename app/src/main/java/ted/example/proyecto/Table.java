@@ -5,6 +5,7 @@ import android.content.res.Resources;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.view.Gravity;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TableLayout;
 import android.widget.TableRow;
@@ -23,7 +24,9 @@ public class Table {
     private ArrayList<TableRow> filas;  // Array de las filas de la tabla
     private Activity actividad;
     private Resources rs;
-    private int FILAS, COLUMNAS;        // Filas y columnas de nuestra tabla
+    private int FILAS, COLUMNAS;
+    DatabaseHelper db;
+    // Filas y columnas de nuestra tabla
 
     /**
      * Constructor de la tabla
@@ -95,9 +98,16 @@ public class Table {
 
         }
         Button button = new Button(context);
+        button.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                db = new DatabaseHelper(context, null, 1, null);
+                db.updateRequest((elementos.get(elementos.size()-1)+ ""), "ACCEPTED");
+        }});
         button.setText("Aceptar");
         button.setId(Integer.parseInt(elementos.get(elementos.size()-1)));
-        fila.addView(button);;
+        fila.addView(button);
         filas.add(fila);
         tabla.addView(fila);
 

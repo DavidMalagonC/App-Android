@@ -117,7 +117,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     boolean updateRequest(String id, String conditions) {
 
-        db.execSQL("UPDATE "+ TABLE_NAME +"SET conditions='"+conditions+"' WHERE id='"+id+"'");
+        db.execSQL("UPDATE "+ TABLE_NAME_REQUEST +" SET conditions='"+conditions+ "' WHERE id='"+id+"'");
         return true;
 
     }
