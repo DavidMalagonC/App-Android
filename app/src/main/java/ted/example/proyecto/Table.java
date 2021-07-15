@@ -1,9 +1,11 @@
 package ted.example.proyecto;
 import android.app.Activity;
+import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.view.Gravity;
+import android.widget.Button;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -73,14 +75,14 @@ public class Table {
      * Agrega una fila a la tabla
      * @param elementos Elementos de la fila
      */
-    public void agregarFilaTabla(ArrayList<String> elementos)
+    public void agregarFilaTabla(ArrayList<String> elementos, Context context)
     {
         TableRow.LayoutParams layoutCelda;
         TableRow.LayoutParams layoutFila = new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.WRAP_CONTENT);
         TableRow fila = new TableRow(actividad);
         fila.setLayoutParams(layoutFila);
 
-        for(int i = 0; i< elementos.size(); i++)
+        for(int i = 1; i< elementos.size(); i++)
         {
             TextView texto = new TextView(actividad);
             texto.setText(String.valueOf(elementos.get(i)));
@@ -89,15 +91,20 @@ public class Table {
             texto.setBackgroundResource(R.drawable.tabla_celda);
             layoutCelda = new TableRow.LayoutParams(obtenerAnchoPixelesTexto(texto.getText().toString()), TableRow.LayoutParams.WRAP_CONTENT);
             texto.setLayoutParams(layoutCelda);
-
             fila.addView(texto);
-        }
 
-        tabla.addView(fila);
+        }
+        Button button = new Button(context);
+        button.setText("Aceptar");
+        button.setId(Integer.parseInt(elementos.get(elementos.size()-1)));
+        fila.addView(button);;
         filas.add(fila);
+        tabla.addView(fila);
 
         FILAS++;
     }
+
+
 
     /**
      * Elimina una fila de la tabla

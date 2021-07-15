@@ -11,6 +11,6 @@
         <item>T. producto</item>
         <item>Descripción</item>
         <item>Peso(KG)</item>
-        <item>Condiciones</item>
+        <item>Acción</item>
     </string-array>
 </resources>

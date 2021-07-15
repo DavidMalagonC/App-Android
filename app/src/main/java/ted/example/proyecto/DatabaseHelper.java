@@ -115,6 +115,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     }
 
+    boolean updateRequest(String id, String conditions) {
+
+        db.execSQL("UPDATE "+ TABLE_NAME +"SET conditions='"+conditions+"' WHERE id='"+id+"'");
+        return true;
+
+    }
+
     public User login(String email, String password) {
         Boolean login = false;
         Cursor c = getUser(email);
@@ -139,23 +146,26 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return db.rawQuery("select * from user where EMAIL = '" + email + "'", null);
     }
 
-    public ArrayList getRequestLoad() {
-        ArrayList<String> requests = new ArrayList<String>();
+    public ArrayList<ArrayList<String>> getRequestLoad() {
+        ArrayList<ArrayList<String>> requestsList = new ArrayList<ArrayList<String>>();
         Cursor c = db.rawQuery("select * from request_load", null);
         if (c != null && c.getCount() > 0) {
             c.moveToFirst();
-            for (int i = 1; i < c.getCount(); i++) {
+            for (int i = 0; i < c.getCount(); i++) {
+                ArrayList<String> requests = new ArrayList<String>();
                 requests.add(c.getString(c.getColumnIndex("origin")));
                 requests.add(c.getString(c.getColumnIndex("destiny")));
                 requests.add(c.getString(c.getColumnIndex("product")));
                 requests.add(c.getString(c.getColumnIndex("description")));
                 requests.add(c.getInt(c.getColumnIndex("weigth"))+"");
-                requests.add(c.getString(c.getColumnIndex("conditions")));
+                requests.add(c.getString(c.getColumnIndex("id")));
+                requestsList.add(requests);
                 c.moveToNext();
             }
+
         }
         c.close();
-        return requests;
+        return requestsList;
 
     }
 }

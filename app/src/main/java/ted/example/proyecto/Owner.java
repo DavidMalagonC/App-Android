@@ -16,7 +16,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
-public class Owner extends AppCompatActivity implements View.OnClickListener{
+public class Owner extends AppCompatActivity implements View.OnClickListener {
     DatabaseHelper db;
 
     private Table table; // Layout donde se pintará la tabla
@@ -33,22 +33,23 @@ public class Owner extends AppCompatActivity implements View.OnClickListener{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_request);
 
-        db=new DatabaseHelper(this,null,1,null);
+        db = new DatabaseHelper(this, null, 1, null);
         user = (User) getIntent().getExtras().getSerializable("user");
-        table = new Table(this, (TableLayout)findViewById(R.id.table));
+        table = new Table(this, (TableLayout) findViewById(R.id.table));
         table.agregarCabecera(R.array.cabecera_tabla);
-        table.agregarFilaTabla(db.getRequestLoad());
-
-
+        ArrayList<ArrayList<String>> elements = db.getRequestLoad();
+        for(int i = 0; i< elements.size(); i++) {
+            table.agregarFilaTabla(elements.get(i), this);
+        }
 
 
     }
 
     public void onClick(View v) {
-        try{
-        switch (v.getId()) {
-            case R.id.buttonRequest:
-                SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+        try {
+            db.updateRequest(v.getId()+ "", "ACCEPTED");
+            GMailSender em = new GMailSender("juventusdebogota@gmail.com", "Juventus12345");
+            // em.sendMail("Confirmacion de registro", "Su usuario es: " + correo + " su contraseña es: " + contraseña, "123123123123123", "manuelcastrog9@gmail.com");
                 /*boolean result = db.insertRequest(origin.getText().toString(), destiny.getText().toString(),
                         product.getText().toString(), description.getText().toString(),
                         weigth.getText().toString(), conditions.getText().toString(), user.getId());
@@ -56,13 +57,12 @@ public class Owner extends AppCompatActivity implements View.OnClickListener{
                     alert("¡Solicitud enviada exitosamente!");
                 else
                     alert("Ocurrio un error al crear la solictud");*/
-        }
-        } catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e.getMessage());
         }
     }
 
-    private void alert(String message){
+    private void alert(String message) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         //builder.setTitle("Titulo");
         builder.setMessage(message);

@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         if (user.getRol() == 1)
                             intent = new Intent(MainActivity.this, Businessman.class);
                         if (user.getRol() == 2)
-                            intent = new Intent(MainActivity.this, Owner.class);
+                            intent = new Intent(MainActivity.this, OwnerDashboard.class);
                         if (user.getRol() == 3)
                             intent = new Intent(MainActivity.this, Businessman.class);
                         intent.putExtra("user", user);
