@@ -70,6 +70,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 + "conditions TEXT,"
 
                 + "id_vehicle INT,"
+                
 
                 + "id_user INT)");
 
@@ -147,13 +148,21 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     }
 
-    boolean updateRequest(String id, String conditions, String id_owner) throws Exception {
+    boolean updateRequest(String id, String conditions, String id_owner, String message) throws Exception {
         Cursor c = getVehicle(id_owner);
         c.moveToFirst();
         int idVehicle =  c.getInt(c.getColumnIndex("id"));
         db.execSQL("UPDATE "+ TABLE_NAME_REQUEST +" SET conditions='"+conditions+ "', id_vehicle='"+idVehicle+ "' WHERE id='"+id+"'");
         GMailSender em = new GMailSender("juventusdebogota@gmail.com", "Juventus12345");
-        em.sendMail("Notificación solicitud de carga de transporte", "Tu solicitud fue aceptada! Dentro de poco iniciar el viaje", "Juventus", "davidmalagonc@gmail.com");
+        em.sendMail("Notificación solicitud de carga de transporte", message, "Juventus", "davidmalagonc@gmail.com");
+        return true;
+
+    }
+
+    boolean updateRequestDriver(String id, String conditions, String id_owner, String message) throws Exception {
+        db.execSQL("UPDATE "+ TABLE_NAME_REQUEST +" SET conditions='"+conditions+ "' WHERE id='"+id+"'");
+        GMailSender em = new GMailSender("juventusdebogota@gmail.com", "Juventus12345");
+        em.sendMail("Notificación solicitud de carga de transporte", message, "Juventus", "davidmalagonc@gmail.com");
         return true;
 
     }
@@ -207,6 +216,46 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         c.close();
         return requestsList;
 
+    }
+
+    public ArrayList<ArrayList<String>> getRequestLoadDriver(int id) {
+
+        Cursor vehicle = getVehicleByDriver(id);
+        if(vehicle == null || vehicle.getCount()  < 1){
+            return null;
+        }
+        vehicle.moveToFirst();
+        int idVehicle = vehicle.getInt(vehicle.getColumnIndex("id"));
+
+        ArrayList<ArrayList<String>> requestsList = new ArrayList<ArrayList<String>>();
+        Cursor c = db.rawQuery("select * from request_load where conditions = 'ACCEPTED' OR conditions = 'TRAVELING' OR conditions = 'FINALIZED' and  id_vehicle = '"+ idVehicle +"'", null);
+        if (c != null && c.getCount() > 0) {
+            c.moveToFirst();
+            for (int i = 0; i < c.getCount(); i++) {
+                ArrayList<String> requests = new ArrayList<String>();
+                requests.add(c.getString(c.getColumnIndex("origin")));
+                requests.add(c.getString(c.getColumnIndex("destiny")));
+                requests.add(c.getString(c.getColumnIndex("product")));
+                requests.add(c.getString(c.getColumnIndex("description")));
+                requests.add(c.getInt(c.getColumnIndex("weigth"))+"");
+                requests.add(c.getInt(c.getColumnIndex("id_vehicle"))+"");
+                requests.add(c.getString(c.getColumnIndex("conditions"))+"");
+                requests.add(c.getString(c.getColumnIndex("id")));
+                requestsList.add(requests);
+                c.moveToNext();
+            }
+
+        }
+        else {
+            return null;
+        }
+        c.close();
+        return requestsList;
+
+    }
+
+    public Cursor getVehicleByDriver(int idDriver) {
+        return db.rawQuery("select * from vehicle where id_driver = " + idDriver + "", null);
     }
 }
 
