@@ -123,6 +123,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         content.put("description", description);
         content.put("weigth", weigth);
         content.put("conditions", conditions);
+        content.put("id_vehicle", "SA");
         content.put("id_user", id_user);
 
         db.insert(TABLE_NAME_REQUEST, null, content);
@@ -150,9 +151,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         Cursor c = getVehicle(id_owner);
         c.moveToFirst();
         int idVehicle =  c.getInt(c.getColumnIndex("id"));
-        db.execSQL("UPDATE "+ TABLE_NAME_REQUEST +" SET conditions='"+conditions+ "' SET id_vehicle='"+idVehicle+ "' WHERE id='"+id+"'");
+        db.execSQL("UPDATE "+ TABLE_NAME_REQUEST +" SET conditions='"+conditions+ "', id_vehicle='"+idVehicle+ "' WHERE id='"+id+"'");
         GMailSender em = new GMailSender("juventusdebogota@gmail.com", "Juventus12345");
-        em.sendMail("Notificación solicitud de carga de transporte", "Tu solicitud fue aceptada! Dentro de poco iniciar el viaje", "123123123123123", "davidmalagonc@gmail.com");
+        em.sendMail("Notificación solicitud de carga de transporte", "Tu solicitud fue aceptada! Dentro de poco iniciar el viaje", "Juventus", "davidmalagonc@gmail.com");
         return true;
 
     }

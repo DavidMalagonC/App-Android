@@ -28,7 +28,7 @@
                 android:layout_marginRight="10dp"
                 android:layout_weight="1"
                 android:onClick="puntos"
-                android:text="iniciar recorrido"
+                android:text="Solicitud de carga"
                 android:textStyle="bold" />
 
         </LinearLayout>
@@ -47,7 +47,7 @@
                 android:layout_marginRight="30dp"
                 android:layout_weight="1"
                 android:onClick="estado"
-                android:text="finalizar recorrido"
+                android:text="Reportar ubicación actual"
                 android:textStyle="bold" />
         </LinearLayout>
     </LinearLayout>

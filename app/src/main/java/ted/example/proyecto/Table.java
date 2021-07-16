@@ -108,7 +108,6 @@ public class Table {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-                GMailSender em = new GMailSender("juventusdebogota@gmail.com", "Juventus12345");
         }});
         button.setText("Aceptar");
         button.setId(Integer.parseInt(elementos.get(elementos.size()-1)));

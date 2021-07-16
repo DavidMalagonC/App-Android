@@ -14,8 +14,8 @@ public class OwnerDashboard extends AppCompatActivity implements View.OnClickLis
 
     public void requestLoad(View view) {
         Intent intent = new Intent(this, Owner.class);
-        intent.putExtra("user", user);
         user = (User) getIntent().getExtras().getSerializable("user");
+        intent.putExtra("user", user);
         this.startActivity(intent);
     }
 
