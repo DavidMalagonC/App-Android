@@ -10,6 +10,7 @@ import android.os.Build;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
+import androidx.core.database.CursorWindowCompat;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -20,6 +21,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final int DB_VERSION = 1;
     private static final String TABLE_NAME = "user";
     private static final String TABLE_NAME_REQUEST = "request_load";
+    private static final String TABLE_NAME_VEHICLE = "vehicle";
     private SQLiteDatabase db;
 
     public DatabaseHelper(@Nullable Context context, @Nullable String name, int version, @NonNull SQLiteDatabase.OpenParams openParams) {
@@ -67,7 +69,20 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
                 + "conditions TEXT,"
 
+                + "id_vehicle INT,"
+
                 + "id_user INT)");
+
+        db.execSQL("CREATE TABLE " + TABLE_NAME_VEHICLE + "("
+
+                + "id INTEGER PRIMARY KEY AUTOINCREMENT, "
+
+                + "plates TEXT, "
+
+                + "id_driver INT,"
+
+                + "id_owner INT)");
+
     }
 
     @Override
@@ -99,8 +114,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     boolean insertRequest(String origin, String destiny, String product, String description,
-                   String weigth, String conditions, int id_user) {
- 
+                          String weigth, String conditions, int id_user) {
+
         ContentValues content = new ContentValues();
         content.put("origin", origin);
         content.put("destiny", destiny);
@@ -115,9 +130,29 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     }
 
-    boolean updateRequest(String id, String conditions) {
+    boolean insertVehicle(String plate, String emailDriver, String idOwner) {
+        Cursor c = getUser(emailDriver);
+        if(c == null || c.getCount() == 0 ){
+            return false;
+        }
+        c.moveToFirst();
+        ContentValues content = new ContentValues();
+        content.put("plates", plate);
+        content.put("id_owner", idOwner);
+        content.put("id_driver",  c.getInt(c.getColumnIndex("id")));
 
-        db.execSQL("UPDATE "+ TABLE_NAME_REQUEST +" SET conditions='"+conditions+ "' WHERE id='"+id+"'");
+        db.insert(TABLE_NAME_VEHICLE, null, content);
+        return true;
+
+    }
+
+    boolean updateRequest(String id, String conditions, String id_owner) throws Exception {
+        Cursor c = getVehicle(id_owner);
+        c.moveToFirst();
+        int idVehicle =  c.getInt(c.getColumnIndex("id"));
+        db.execSQL("UPDATE "+ TABLE_NAME_REQUEST +" SET conditions='"+conditions+ "' SET id_vehicle='"+idVehicle+ "' WHERE id='"+id+"'");
+        GMailSender em = new GMailSender("juventusdebogota@gmail.com", "Juventus12345");
+        em.sendMail("Notificación solicitud de carga de transporte", "Tu solicitud fue aceptada! Dentro de poco iniciar el viaje", "123123123123123", "davidmalagonc@gmail.com");
         return true;
 
     }
@@ -128,13 +163,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         if (c != null && c.getCount() > 0) {
             c.moveToFirst();
 
-                int rol = c.getInt(c.getColumnIndex("ROL"));
-                String passwordDB = c.getString(c.getColumnIndex("PASSWORD"));
-                int id = c.getInt(c.getColumnIndex("id"));
-                if (password.equals(passwordDB)) {
-                    c.close();
-                    return new User(id, rol);
-                }
+            int rol = c.getInt(c.getColumnIndex("ROL"));
+            String passwordDB = c.getString(c.getColumnIndex("PASSWORD"));
+            int id = c.getInt(c.getColumnIndex("id"));
+            if (password.equals(passwordDB)) {
+                c.close();
+                return new User(id, rol);
+            }
         }
 
         //Cerramos el cursor
@@ -144,6 +179,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public Cursor getUser(String email) {
         return db.rawQuery("select * from user where EMAIL = '" + email + "'", null);
+    }
+
+    public Cursor getVehicle(String idOwner) {
+        return db.rawQuery("select * from vehicle where id_owner = '" + idOwner + "'", null);
     }
 
     public ArrayList<ArrayList<String>> getRequestLoad() {

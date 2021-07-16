@@ -39,7 +39,7 @@ public class Owner extends AppCompatActivity implements View.OnClickListener {
         table.agregarCabecera(R.array.cabecera_tabla);
         ArrayList<ArrayList<String>> elements = db.getRequestLoad();
         for(int i = 0; i< elements.size(); i++) {
-            table.agregarFilaTabla(elements.get(i), this);
+            table.agregarFilaTabla(elements.get(i), this, user.getId());
         }
 
 
@@ -47,7 +47,7 @@ public class Owner extends AppCompatActivity implements View.OnClickListener {
 
     public void onClick(View v) {
         try {
-            db.updateRequest(v.getId()+ "", "ACCEPTED");
+            db.updateRequest(v.getId()+ "", "ACCEPTED", user.getId()+"");
             GMailSender em = new GMailSender("juventusdebogota@gmail.com", "Juventus12345");
             // em.sendMail("Confirmacion de registro", "Su usuario es: " + correo + " su contraseña es: " + contraseña, "123123123123123", "manuelcastrog9@gmail.com");
                 /*boolean result = db.insertRequest(origin.getText().toString(), destiny.getText().toString(),

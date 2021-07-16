@@ -28,7 +28,6 @@ public class OwnerDashboard extends AppCompatActivity implements View.OnClickLis
         super.onCreate(savedInstanceState);
         setContentView(R.layout.dashboardowner);
 
-
     }
 
     public void getRequestLoadEnd(View view) {
@@ -37,6 +36,14 @@ public class OwnerDashboard extends AppCompatActivity implements View.OnClickLis
 
     @Override
     public void onClick(View v) {
+
+    }
+
+    public void associateVehicle(View view) {
+        Intent intent = new Intent(this, AsociateVehicle.class);
+        user = (User) getIntent().getExtras().getSerializable("user");
+        intent.putExtra("user", user);
+        this.startActivity(intent);
 
     }
 }

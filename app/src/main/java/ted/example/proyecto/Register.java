@@ -79,7 +79,7 @@ public class Register extends AppCompatActivity implements View.OnClickListener,
                                int pos, long id) {
          String rolSelected = parent.getItemAtPosition(pos).toString();
         if(rolSelected.equals("Comerciante"))
-                rol = 1;
+            rol = 1;
          if(rolSelected.equals("Conductor"))
             rol = 2;
          if(rolSelected.equals("Propietario"))

@@ -78,7 +78,7 @@ public class Table {
      * Agrega una fila a la tabla
      * @param elementos Elementos de la fila
      */
-    public void agregarFilaTabla(ArrayList<String> elementos, Context context)
+    public void agregarFilaTabla(ArrayList<String> elementos, Context context, int id)
     {
         TableRow.LayoutParams layoutCelda;
         TableRow.LayoutParams layoutFila = new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.WRAP_CONTENT);
@@ -103,7 +103,12 @@ public class Table {
             @Override
             public void onClick(View view) {
                 db = new DatabaseHelper(context, null, 1, null);
-                db.updateRequest((elementos.get(elementos.size()-1)+ ""), "ACCEPTED");
+                try {
+                    db.updateRequest((elementos.get(elementos.size()-1)+ ""), "ACCEPTED", +id+"");
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                GMailSender em = new GMailSender("juventusdebogota@gmail.com", "Juventus12345");
         }});
         button.setText("Aceptar");
         button.setId(Integer.parseInt(elementos.get(elementos.size()-1)));

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -11,19 +10,23 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/ic_launcher_foreground"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="260dp"
+            android:layout_width="438dp"
+            android:layout_height="186dp"
             android:layout_marginTop="60dp"
             android:orientation="horizontal">
 
             <Button
                 android:id="@+id/button"
-                android:layout_width="150dp"
-                android:layout_height="150dp"
+                android:layout_width="wrap_content"
+                android:layout_height="69dp"
                 android:layout_marginLeft="30dp"
                 android:layout_marginTop="100dp"
                 android:layout_marginRight="10dp"
@@ -34,34 +37,45 @@
 
         </LinearLayout>
 
+        <Button
+            android:id="@+id/button3"
+            android:layout_width="372dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="100dp"
+            android:onClick="getRequestLoadEnd"
+            android:text="Consultar solicitudes de carga ya finalizadas"
+            android:textStyle="bold" />
+
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="260dp"
+            android:layout_width="431dp"
+            android:layout_height="94dp"
             android:orientation="horizontal">
 
             <Button
-                android:id="@+id/button3"
-                android:layout_width="150dp"
-                android:layout_height="150dp"
-                android:layout_marginLeft="30dp"
-                android:layout_marginRight="10dp"
-                android:layout_weight="1"
-                android:onClick="getRequestLoadEnd"
-                android:text="Consultar solicitudes de carga ya finalizadas"
-                android:textStyle="bold" />
-
-            <Button
                 android:id="@+id/button4"
-                android:layout_width="150dp"
-                android:layout_height="150dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="30dp"
                 android:layout_weight="1"
                 android:onClick="getRequestLoadInProcess"
-                android:text="consultar solicitud de carga en proceso"
+                android:text="Consultar solicitud de carga en proceso"
                 android:textStyle="bold" />
 
         </LinearLayout>
+
+        <Button
+            android:id="@+id/button5"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="30dp"
+            android:layout_weight="0"
+            android:onClick="associateVehicle"
+            android:text="Asociar vehiculo"
+            android:textStyle="bold" />
+
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
