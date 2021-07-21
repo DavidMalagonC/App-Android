@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "236877236185",
+    "project_id": "db-vacunas",
+    "storage_bucket": "db-vacunas.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:236877236185:android:c9fe8ec09e19de170bfbc8",
+        "android_client_info": {
+          "package_name": "unipiloto.edu.co.vacunas"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "236877236185-ufaeda7lo575knvqha98mepf0v2ekbga.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCyy2lFymQFb6HuCB4oPZT9qSE8_hdi6Nw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "236877236185-ufaeda7lo575knvqha98mepf0v2ekbga.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
