@@ -175,7 +175,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         Cursor c = getVehicleByDriver(id);
         c.moveToFirst();
         int idVehicle =  c.getInt(c.getColumnIndex("id"));
-        db.execSQL("UPDATE "+ TABLE_NAME_REQUEST +" SET location='"+location+ "' WHERE id_vehicule='"+idVehicle+"'");
+        db.execSQL("UPDATE "+ TABLE_NAME_REQUEST +" SET location='"+location+ "' WHERE id_vehicle='"+idVehicle+"' ");
         GMailSender em = new GMailSender("juventusdebogota@gmail.com", "Juventus12345");
         em.sendMail("Notificación solicitud de carga de transporte", location, "Juventus", "davidmalagonc@gmail.com");
         return true;
@@ -224,6 +224,33 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 requests.add(c.getInt(c.getColumnIndex("weigth"))+"");
                 requests.add(c.getString(c.getColumnIndex("id_vehicle"))+"");
                 requests.add(c.getString(c.getColumnIndex("conditions"))+"");
+                requests.add(c.getString(c.getColumnIndex("location"))+"");
+                requests.add(c.getString(c.getColumnIndex("id")));
+                requestsList.add(requests);
+                c.moveToNext();
+            }
+
+        }
+        c.close();
+        return requestsList;
+
+    }
+
+    public ArrayList<ArrayList<String>> getRequestLoadBusinessMan(int id) {
+        ArrayList<ArrayList<String>> requestsList = new ArrayList<ArrayList<String>>();
+        Cursor c = db.rawQuery("select * from request_load where id_user="+id, null);
+        if (c != null && c.getCount() > 0) {
+            c.moveToFirst();
+            for (int i = 0; i < c.getCount(); i++) {
+                ArrayList<String> requests = new ArrayList<String>();
+                requests.add(c.getString(c.getColumnIndex("origin")));
+                requests.add(c.getString(c.getColumnIndex("destiny")));
+                requests.add(c.getString(c.getColumnIndex("product")));
+                requests.add(c.getString(c.getColumnIndex("description")));
+                requests.add(c.getInt(c.getColumnIndex("weigth"))+"");
+                requests.add(c.getString(c.getColumnIndex("id_vehicle"))+"");
+                requests.add(c.getString(c.getColumnIndex("conditions"))+"");
+                requests.add(c.getString(c.getColumnIndex("location"))+"");
                 requests.add(c.getString(c.getColumnIndex("id")));
                 requestsList.add(requests);
                 c.moveToNext();
@@ -257,6 +284,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 requests.add(c.getInt(c.getColumnIndex("weigth"))+"");
                 requests.add(c.getInt(c.getColumnIndex("id_vehicle"))+"");
                 requests.add(c.getString(c.getColumnIndex("conditions"))+"");
+                requests.add(c.getString(c.getColumnIndex("location"))+"");
                 requests.add(c.getString(c.getColumnIndex("id")));
                 requestsList.add(requests);
                 c.moveToNext();

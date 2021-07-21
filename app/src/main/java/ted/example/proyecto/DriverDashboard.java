@@ -1,12 +1,17 @@
 package ted.example.proyecto;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
+import android.location.LocationManager;
+import android.net.Uri;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -14,6 +19,7 @@ import android.widget.ListView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -33,6 +39,7 @@ public class DriverDashboard extends AppCompatActivity implements View.OnClickLi
     FusedLocationProviderClient fusedLocationPorviderClient;
     String locationTravel;
     DatabaseHelper db;
+    LocationManager ubicacion;
 
     public void getRequestLoadInProcess(View view) {
 
@@ -42,9 +49,12 @@ public class DriverDashboard extends AppCompatActivity implements View.OnClickLi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.dashboardconductor);
+        user = (User) getIntent().getExtras().getSerializable("user");
         fusedLocationPorviderClient = LocationServices.getFusedLocationProviderClient(this);
         db = new DatabaseHelper(this, null, 1, null);
 
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
     }
 
@@ -66,17 +76,36 @@ public class DriverDashboard extends AppCompatActivity implements View.OnClickLi
     }
 
     public void reportLocation(View view) {
-        getLocation();
+        lastLocation();
     }
 
+    public void lastLocation(){
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            ubicacion = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+
+            Location loc = ubicacion.getLastKnownLocation(LocationManager.GPS_PROVIDER) ;
+
+            if (ubicacion != null) {
+                String locationTravel = String.valueOf(loc.getLatitude());
+                locationTravel +=  " " + String.valueOf(loc.getLongitude());
+                try {
+                    db.updateRequestLocation(user.getId(), locationTravel);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }
+    }
     public void getLocation() {
-        //if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED){
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
 
             fusedLocationPorviderClient.getLastLocation().addOnCompleteListener(new OnCompleteListener<Location>() {
                 @Override
                 public void onComplete(@NonNull Task<Location> task) {
                     Location location = task.getResult();
+                    task.isSuccessful();
 
                     if (location != null) {
                         Geocoder geocoder = new Geocoder(DriverDashboard.this, Locale.getDefault());
@@ -99,12 +128,49 @@ public class DriverDashboard extends AppCompatActivity implements View.OnClickLi
                         }
 
                     } else {
-                        if (ActivityCompat.checkSelfPermission(DriverDashboard.this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED)
-                            getLocation();
+                        if (ActivityCompat.checkSelfPermission(DriverDashboard.this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED){
+//                            locationTravel = "latitud: " + (double) ;
+//                            locationTravel += "longitud: " + (double) addresses.get(0).getLongitude();
+//                            db.updateRequestLocation(user.getId(), locationTravel);
+//                            getLocation();
                     }
-
-                }
+                }}
             });
         }
+    }
+
+    @Override public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true; /** true -> el menú ya está visible */
+    }
+
+    @Override public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.action_settings) {
+            Intent intent = new Intent(this, MainActivity.class);
+            this.startActivity(intent);
+            return true;
+        }
+        if (id == R.id.acercaDe) {
+           // lanzarAcercaDe(null);
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    public void onSendMaps(View view) {
+        ArrayList<ArrayList<String>> request = db.getRequestLoadDriver(user.getId());
+
+        String origin = request.get(0).get(0);
+        String destiny = request.get(0).get(1);
+        Uri.Builder builder = new Uri.Builder();
+        builder.scheme("https").authority("www.google.com").appendPath("maps").
+                appendPath("dir").appendPath("").appendQueryParameter("api", "1").
+                appendQueryParameter("origin", origin).
+                appendQueryParameter("destination", destiny);
+        String url = builder.build().toString();
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.setData(Uri.parse(url));
+        startActivity(intent);
     }
 }

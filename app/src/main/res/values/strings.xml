@@ -13,6 +13,7 @@
         <item>Peso(KG)</item>
         <item>Id viaje</item>
         <item>Estado</item>
+        <item>Ubicación</item>
         <item>Acción</item>
     </string-array>
 

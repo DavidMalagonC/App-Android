@@ -18,7 +18,7 @@ public class BusinessmanDashboard extends AppCompatActivity implements View.OnCl
     }
 
     public void getRequestLoad(View view) {
-        Intent intent = new Intent(this, Businessman.class);
+        Intent intent = new Intent(this, RequestLoad.class);
         user = (User) getIntent().getExtras().getSerializable("user");
         intent.putExtra("user", user);
         this.startActivity(intent);

@@ -29,7 +29,7 @@
                 android:layout_marginRight="10dp"
                 android:layout_weight="1"
                 android:onClick="requestLoad"
-                android:text="crear solicitudes de carga"
+                android:text="Crear solicitudes de carga"
                 android:textStyle="bold" />
 
         </LinearLayout>
@@ -48,7 +48,7 @@
                 android:layout_marginRight="30dp"
                 android:layout_weight="1"
                 android:onClick="getRequestLoad"
-                android:text="consultar solicitudes de carga"
+                android:text="Consultar solicitudes de carga"
                 android:textStyle="bold" />
         </LinearLayout>
     </LinearLayout>

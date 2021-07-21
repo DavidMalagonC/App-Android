@@ -18,7 +18,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:name=".User"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Proyecto">
+        android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+        >
         <activity android:name=".Register"></activity>
         <activity android:name=".Businessman"></activity>
         <activity android:name=".Owner"></activity>
@@ -28,6 +29,7 @@
         <activity android:name=".DriverDashboard"></activity>
         <activity android:name=".UbicacionGPS"></activity>
         <activity android:name=".BusinessmanDashboard"></activity>
+        <activity android:name=".RequestLoad"></activity>
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -35,6 +37,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <uses-library
+            android:name="com.google.android.maps"
+            android:required="true" />
     </application>
 
 </manifest>

@@ -7,11 +7,13 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TableLayout;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 
 public class Businessman extends AppCompatActivity implements View.OnClickListener{
     DatabaseHelper db;
@@ -23,6 +25,7 @@ public class Businessman extends AppCompatActivity implements View.OnClickListen
     private EditText weigth;
     private EditText conditions;
     private Button buttonRequest;
+    private Table table;
 
     private User user;
 
@@ -43,6 +46,7 @@ public class Businessman extends AppCompatActivity implements View.OnClickListen
         buttonRequest.setOnClickListener(this);
 
         user = (User) getIntent().getExtras().getSerializable("user");
+
 
     }
 
