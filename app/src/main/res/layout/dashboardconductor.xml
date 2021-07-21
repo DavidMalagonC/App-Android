@@ -29,7 +29,7 @@
                 android:layout_marginRight="10dp"
                 android:layout_weight="1"
                 android:onClick="requestLoadDriver"
-                android:text="Solicitud de carga"
+                android:text="Solicitudes de carga"
                 android:textStyle="bold" />
 
         </LinearLayout>

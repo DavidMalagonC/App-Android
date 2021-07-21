@@ -70,7 +70,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 + "conditions TEXT,"
 
                 + "id_vehicle INT,"
-                
+
+                + "location TEXT,"
 
                 + "id_user INT)");
 
@@ -123,7 +124,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         content.put("product", product);
         content.put("description", description);
         content.put("weigth", weigth);
-        content.put("conditions", conditions);
+        content.put("conditions", "NEW");
         content.put("id_vehicle", "SA");
         content.put("id_user", id_user);
 
@@ -134,7 +135,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     boolean insertVehicle(String plate, String emailDriver, String idOwner) {
         Cursor c = getUser(emailDriver);
-        if(c == null || c.getCount() == 0 ){
+        if(c == null || c.getCount() < 1 ){
             return false;
         }
         c.moveToFirst();
@@ -151,6 +152,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     boolean updateRequest(String id, String conditions, String id_owner, String message) throws Exception {
         Cursor c = getVehicle(id_owner);
         c.moveToFirst();
+        if(c == null || c.getCount() < 1 ){
+            return false;
+        }
         int idVehicle =  c.getInt(c.getColumnIndex("id"));
         db.execSQL("UPDATE "+ TABLE_NAME_REQUEST +" SET conditions='"+conditions+ "', id_vehicle='"+idVehicle+ "' WHERE id='"+id+"'");
         GMailSender em = new GMailSender("juventusdebogota@gmail.com", "Juventus12345");
@@ -163,6 +167,17 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("UPDATE "+ TABLE_NAME_REQUEST +" SET conditions='"+conditions+ "' WHERE id='"+id+"'");
         GMailSender em = new GMailSender("juventusdebogota@gmail.com", "Juventus12345");
         em.sendMail("Notificación solicitud de carga de transporte", message, "Juventus", "davidmalagonc@gmail.com");
+        return true;
+
+    }
+
+    boolean updateRequestLocation(int id, String location) throws Exception {
+        Cursor c = getVehicleByDriver(id);
+        c.moveToFirst();
+        int idVehicle =  c.getInt(c.getColumnIndex("id"));
+        db.execSQL("UPDATE "+ TABLE_NAME_REQUEST +" SET location='"+location+ "' WHERE id_vehicule='"+idVehicle+"'");
+        GMailSender em = new GMailSender("juventusdebogota@gmail.com", "Juventus12345");
+        em.sendMail("Notificación solicitud de carga de transporte", location, "Juventus", "davidmalagonc@gmail.com");
         return true;
 
     }
@@ -207,6 +222,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 requests.add(c.getString(c.getColumnIndex("product")));
                 requests.add(c.getString(c.getColumnIndex("description")));
                 requests.add(c.getInt(c.getColumnIndex("weigth"))+"");
+                requests.add(c.getString(c.getColumnIndex("id_vehicle"))+"");
+                requests.add(c.getString(c.getColumnIndex("conditions"))+"");
                 requests.add(c.getString(c.getColumnIndex("id")));
                 requestsList.add(requests);
                 c.moveToNext();

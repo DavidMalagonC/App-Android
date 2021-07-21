@@ -89,8 +89,8 @@ public class Table {
         TableRow.LayoutParams layoutFila = new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.WRAP_CONTENT);
         TableRow fila = new TableRow(actividad);
         fila.setLayoutParams(layoutFila);
-
-        for (int i = 1; i < elementos.size(); i++) {
+        String conditions = "";
+        for (int i = 0; i < elementos.size()-1; i++) {
             TextView texto = new TextView(actividad);
             texto.setText(String.valueOf(elementos.get(i)));
             texto.setGravity(Gravity.CENTER_HORIZONTAL);
@@ -99,8 +99,12 @@ public class Table {
             layoutCelda = new TableRow.LayoutParams(obtenerAnchoPixelesTexto(texto.getText().toString()), TableRow.LayoutParams.WRAP_CONTENT);
             texto.setLayoutParams(layoutCelda);
             fila.addView(texto);
+            if (i == 6) {
+                conditions = String.valueOf(elementos.get(i));
+            }
 
         }
+        if (conditions.equals("NEW")) {
         Button button = new Button(context);
         button.setOnClickListener(new View.OnClickListener() {
 
@@ -108,8 +112,12 @@ public class Table {
             public void onClick(View view) {
                 db = new DatabaseHelper(context, null, 1, null);
                 try {
-                    db.updateRequest((elementos.get(elementos.size() - 1) + ""), "ACCEPTED",
+                    boolean res = db.updateRequest((elementos.get(elementos.size() - 1) + ""), "ACCEPTED",
                             +id + "", "Tu solicitud fue aceptada! Dentro de poco iniciar el viaje");
+                    if (res)
+                        alert("Solicitud de transporte aceptada!", context);
+                    else
+                        alert("Para aceptar una solicitud debe tener un vehiculo registrado", context);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -118,6 +126,7 @@ public class Table {
         button.setText("Aceptar");
         button.setId(Integer.parseInt(elementos.get(elementos.size() - 1)));
         fila.addView(button);
+        }
         filas.add(fila);
         tabla.addView(fila);
 
@@ -142,6 +151,7 @@ public class Table {
             if (i == 6) {
                 conditions = String.valueOf(elementos.get(i));
             }
+
         }
         if (!conditions.equals("FINALIZED")) {
             Button button = new Button(context);
@@ -150,15 +160,19 @@ public class Table {
             if (conditions.equals("TRAVELING")) {
                 button.setText("Finalizar viaje");
                 message = "Viaje finalizado!";
+                conditions = "FINALIZED";
+            }else{
+                conditions = "TRAVELING";
             }
 
+            String finalConditions = conditions;
             button.setOnClickListener(new View.OnClickListener() {
 
                 @Override
                 public void onClick(View view) {
                     db = new DatabaseHelper(context, null, 1, null);
                     try {
-                        db.updateRequestDriver((elementos.get(elementos.size() - 1) + ""), "FINALIZED", +id + "", message);
+                        db.updateRequestDriver((elementos.get(elementos.size() - 1) + ""), finalConditions, +id + "", message);
                         alert(message, context);
                     } catch (Exception e) {
                         e.printStackTrace();

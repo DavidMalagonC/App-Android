@@ -4,7 +4,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    tools:context=".BusinessmanDashboard">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -27,7 +28,7 @@
                 android:layout_marginTop="100dp"
                 android:layout_marginRight="10dp"
                 android:layout_weight="1"
-                android:onClick="puntos"
+                android:onClick="requestLoad"
                 android:text="crear solicitudes de carga"
                 android:textStyle="bold" />
 
@@ -46,7 +47,7 @@
                 android:layout_marginTop="100dp"
                 android:layout_marginRight="30dp"
                 android:layout_weight="1"
-                android:onClick="estado"
+                android:onClick="getRequestLoad"
                 android:text="consultar solicitudes de carga"
                 android:textStyle="bold" />
         </LinearLayout>

@@ -46,17 +46,6 @@ public class Driver extends AppCompatActivity implements View.OnClickListener{
         }
     }
 
-    public void Asociate(View view) {
-
-        boolean res = db.insertVehicle(plate.getText().toString(), emailDriver.getText().toString(), user.getId() + "" );
-        if(res){
-            alert("Vehiculo registrado exitosamente");
-        }
-        else{
-            alert("No se encontro un conductor con el correo ingresado");
-        }
-    }
-
     public void alert(String message){
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         //builder.setTitle("Titulo");

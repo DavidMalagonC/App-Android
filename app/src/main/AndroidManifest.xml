@@ -26,6 +26,8 @@
         <activity android:name=".AsociateVehicle"></activity>
         <activity android:name=".Driver"></activity>
         <activity android:name=".DriverDashboard"></activity>
+        <activity android:name=".UbicacionGPS"></activity>
+        <activity android:name=".BusinessmanDashboard"></activity>
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

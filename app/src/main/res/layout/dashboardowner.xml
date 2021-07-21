@@ -17,64 +17,12 @@
         app:layout_constraintTop_toTopOf="parent">
 
 
-        <LinearLayout
-            android:layout_width="438dp"
-            android:layout_height="186dp"
-            android:layout_marginTop="60dp"
-            android:orientation="horizontal">
-
-            <Button
-                android:id="@+id/button"
-                android:layout_width="wrap_content"
-                android:layout_height="69dp"
-                android:layout_marginLeft="30dp"
-                android:layout_marginTop="100dp"
-                android:layout_marginRight="10dp"
-                android:layout_weight="1"
-                android:onClick="requestLoad"
-                android:text="Consultar solicitudes de carga"
-                android:textStyle="bold" />
-
-        </LinearLayout>
-
-        <Button
-            android:id="@+id/button3"
-            android:layout_width="372dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="30dp"
-            android:layout_marginRight="100dp"
-            android:onClick="getRequestLoadEnd"
-            android:text="Consultar solicitudes de carga ya finalizadas"
-            android:textStyle="bold" />
-
-        <LinearLayout
-            android:layout_width="431dp"
-            android:layout_height="94dp"
-            android:orientation="horizontal">
-
-            <Button
-                android:id="@+id/button4"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="30dp"
-                android:layout_weight="1"
-                android:onClick="getRequestLoadInProcess"
-                android:text="Consultar solicitud de carga en proceso"
-                android:textStyle="bold" />
-
-        </LinearLayout>
-
-        <Button
-            android:id="@+id/button5"
+        <ListView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="30dp"
-            android:layout_weight="0"
-            android:onClick="associateVehicle"
-            android:text="Asociar vehiculo"
-            android:textStyle="bold" />
+            android:entries="@array/dashboardOwner"
+            android:id="@+id/dashboardOwner"
+            />
 
     </LinearLayout>
 

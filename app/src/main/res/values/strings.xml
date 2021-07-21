@@ -15,4 +15,8 @@
         <item>Estado</item>
         <item>Acción</item>
     </string-array>
-</resources>
+
+    <string-array name="dashboardOwner">
+        <item>Consultar solicitudes de carga</item>
+        <item>Asociar vehiculo</item>
+    </string-array></resources>
